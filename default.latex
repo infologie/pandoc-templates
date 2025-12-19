@@ -57,6 +57,9 @@ $if(pdf-trailer-id)$
 \fi
 $endif$
 
+$if(titlehead)$
+\titlehead{$titlehead$}
+$endif$
 $if(title)$
 \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
 $endif$
@@ -71,6 +74,109 @@ $if(subtitle)$
 $endif$
 \author{$for(author)$$author$$sep$ \and $endfor$}
 \date{$date$}
+$if(publisher)$
+\publishers{$publisher$}
+$endif$
+
+% DÉBUT AJOUTS
+
+\usepackage{pdfpages}
+
+% Blocs d'exemple
+% source : https://hbfs.wordpress.com/2015/03/17/a-simple-latex-example-environment/
+\usepackage{calc}
+\usepackage{tabto}
+\usepackage{tikz}
+\usepackage[framemethod=tikz]{mdframed} % for colored backgrounds
+\newcommand{\halmos}{$$\square$$} % makes a box at the end
+
+\newlength{\framedinnerleftmargin}
+\newlength{\framedinnertopmargin}
+\newlength{\framedreversedinnerleftmargin}
+\setlength{\framedinnerleftmargin}{2em}
+\setlength{\framedreversedinnerleftmargin}{1em}
+\setlength{\framedinnertopmargin}{0em}
+ 
+% first argument: label in upper left corner,
+% second argument: background color
+\newenvironment{boxedtext}[2]{\begin{mdframed}[%
+hidealllines=true,%
+backgroundcolor=#2,%
+innertopmargin=\framedinnertopmargin,%
+innerleftmargin=\framedinnerleftmargin,%
+innerrightmargin=1em%
+]%
+\tabto{-\framedreversedinnerleftmargin}\textbf{#1}\tabto*{0em}%
+}% begin code
+{\end{mdframed}\vspace{1em}} % end code
+ 
+\newenvironment{summary}[0]{\begin{center}\begin{minipage}[c]{\summarywidth}\begin{spacing}{0.9}\footnotesize} % begin code
+{\end{spacing}\end{minipage}\end{center}} % end code
+
+\newcounter{example}
+ 
+% optional! if you want it to start at zero
+% with every new chapter/section/etc.
+\numberwithin{example}{section}
+ 
+\newenvironment{example}[0]
+{\refstepcounter{example}\vspace{1em plus 1em}\begin{boxedtext}{Exemple \theexample.}{blue!7}}%\setlength{\parskip}{0em}}
+{\end{boxedtext}\vspace{-1em plus 1em}}
+ 
+\newenvironment{example*}[0]
+{\vspace{1em plus 1em}\begin{boxedtext}{Exemple :}{gray!7}}
+{\end{boxedtext}\vspace{-1em plus 1em}}
+%%%
+
+\widowpenalty=10000
+\clubpenalty=10000
+
+\usepackage[margin=10pt,font=small,labelfont=bf,labelsep=endash]{caption}
+
+% En-têtes avec KOMA-Script :
+\usepackage[markcase=noupper,pagestyleset=standard,markcase=used]{scrlayer-scrpage}
+
+$if(ihead)$
+\ihead{$ihead$}
+$endif$
+$if(rehead)$
+\rehead{$rehead$}
+$endif$
+$if(lohead)$
+\lohead{$lohead$}
+$endif$
+
+$if(chead)$
+\chead{$chead$}
+$endif$
+$if(cehead)$
+\cehead{$cehead$}
+$endif$
+$if(cohead)$
+\cohead{$cohead$}
+$endif$
+
+$if(ohead)$
+\ohead{$ohead$}
+$endif$
+$if(lehead)$
+\ohead{$lehead$}
+$endif$
+$if(rohead)$
+\ohead{$rohead$}
+$endif$
+
+$if(ifoot)$
+\ifoot{$ifoot$}
+$endif$
+$if(cfoot)$
+\cfoot{$cfoot$}
+$endif$
+$if(ofoot)$
+\ofoot{$ofoot$}
+$endif$
+
+% FIN AJOUTS
 
 \begin{document}
 $if(has-frontmatter)$
